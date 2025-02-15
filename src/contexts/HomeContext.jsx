@@ -13,7 +13,7 @@ function HomeContextProvider({ children }) {
   const [Cities, setCities] = useState([]);
   const [Price, setPrice] = useState("محدوده قیمت ");
   const [Prices, setPrices] = useState([]);
-
+  const [Loading, setLoading] = useState(false);
 
   useEffect(() => {
    const myCities =  Data.map((item) => {
@@ -56,6 +56,9 @@ function HomeContextProvider({ children }) {
         setCity,
         setType,
         setTypes,
+        Data, 
+        Loading,
+        setLoading
       }}
     >
       {children}

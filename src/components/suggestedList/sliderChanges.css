@@ -1,0 +1,14 @@
+.slick-next:before {
+  color: rgb(184, 183, 186);
+  font-size: 30px;
+}
+.slick-next{
+    margin-right: 10px;
+}
+.slick-prev::before {
+  color: rgb(184, 183, 186);
+  font-size: 30px;
+}
+.slick-prev{
+    margin-right: 10px;
+}

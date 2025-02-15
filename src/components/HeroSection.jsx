@@ -6,7 +6,7 @@ import Search from './Search'
 
 function HeroSection() {
   return (
-    <div className='w-full  h-[80vh]  bg-cover bg-center bg-no-repeat
+    <div className='w-full  h-[90vh]  bg-cover bg-center bg-no-repeat
  -z-10 relative'
      style={{ backgroundImage: `url(${bg})`}}>
         {/* title in hero section */}
