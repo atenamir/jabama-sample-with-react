@@ -64,7 +64,7 @@ var settings = {
       {/* home suggested */}
       <Slider {...settings} className="mx-3">
         {Data.map((item) => (
-          <Link to="/details" key={item.id}>
+          <Link to= {`/details/${item.id}`} key={item.id}>
             <HouseCard details={item} />
           </Link>
         ))}

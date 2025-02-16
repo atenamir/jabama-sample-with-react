@@ -2,10 +2,9 @@ import React, { createContext, useEffect } from "react";
 import { useState } from "react";
 import data from "../data.js";
 
-export   const HomeContext = createContext();
+export const HomeContext = createContext();
 
 function HomeContextProvider({ children }) {
-
   const [Data, setData] = useState(data);
   const [Type, setType] = useState("انتخاب نوع خانه");
   const [Types, setTypes] = useState([]);
@@ -16,36 +15,82 @@ function HomeContextProvider({ children }) {
   const [Loading, setLoading] = useState(false);
 
   useEffect(() => {
-   const myCities =  Data.map((item) => {
+    const myCities = Data.map((item) => {
       return item.city;
     });
-    const allCitis = ['تمامی مقاصد' , ... new Set(myCities)]
-    setCities(allCitis)
+    const allCitis = ["مقاصد (همه)", ...new Set(myCities)];
+    setCities(allCitis);
   }, []);
-// ===
-  useEffect(()=>{
-    const myTypes = Data.map(type =>{
-        return type.type
-    })
+  // ===
+  useEffect(() => {
+    const myTypes = Data.map((type) => {
+      return type.type;
+    });
 
-    const allTypes = ['تمامی تایپ ها' , ...new Set(myTypes)]
-    setTypes(allTypes)
-  } , [])
+    const allTypes = ["تایپ ها (همه)", ...new Set(myTypes)];
+    setTypes(allTypes);
+  }, []);
 
-  
-  useEffect(()=>{
-    const myPrice = Data.map(prices =>{
-      return prices.rent.toLocaleString()
-    })
+  useEffect(() => {
+    const myPrice = Data.map((prices) => {
+      return prices.rent.toLocaleString();
+    });
 
-    const allPrice = ['تمامی قیمت ها' , ...new Set(myPrice)]
-    setPrices(allPrice)
-  } , [])
+    const allPrice = [" قیمت ها (همه)", ...new Set(myPrice)];
+    setPrices(allPrice);
+  }, []);
+
+  // === filtering options
+  const searchOption = () => {
+    setLoading(true);
+
+    const isDefault = (str) => {
+      return str.includes("(همه)");
+    };
+
+    const filterHome = data.filter((home) => {
+      if (home.rent == Price && home.city == City && home.type == Type) {
+        return home;
+      }
+      if (!isDefault(City) && !isDefault(Type) && !isDefault(Price)) {
+        return home.city === City && home.type === Type && home.rent === Price;
+      }
+      if (isDefault(City) && isDefault(Type) && isDefault(Price)) {
+        return home;
+      }
+      if (!isDefault(City) && isDefault(Type) && isDefault(Price)) {
+        return home.city === City;
+      }
+      if (isDefault(City) && !isDefault(Type) && isDefault(Price)) {
+        return home.type === Type;
+      }
+      if (isDefault(City) && isDefault(Type) && !isDefault(Price)) {
+        return home.rent === Price;
+      }
+      if (!isDefault(City) && !isDefault(Type) && isDefault(Price)) {
+        return home.city === City && home.type === Type;
+      }
+      if (!isDefault(City) && isDefault(Type) && !isDefault(Price)) {
+        return home.city === City && home.rent === Price;
+      }
+      if (isDefault(City) && !isDefault(Type) && !isDefault(Price)) {
+        return home.type === Type && home.rent === Price;
+      }
+    });
+// for emulate the user's device
+    setTimeout(() => {
+      return (
+        filterHome.length < 1 ? setData([]) : setData(filterHome),
+        setLoading(false)
+      );
+    }, 3000);
+  };
+
   return (
     <HomeContext.Provider
       value={{
-       Type,
-       Types,
+        Type,
+        Types,
         City,
         Cities,
         Prices,
@@ -56,9 +101,10 @@ function HomeContextProvider({ children }) {
         setCity,
         setType,
         setTypes,
-        Data, 
+        Data,
         Loading,
-        setLoading
+        setLoading,
+        searchOption,
       }}
     >
       {children}
