@@ -15,7 +15,9 @@ function HomeContextProvider({ children }) {
   const [Loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true)
     const myCities = Data.map((item) => {
+      setLoading(false)
       return item.city;
     });
     const allCitis = ["مقاصد (همه)", ...new Set(myCities)];

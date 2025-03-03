@@ -4,7 +4,6 @@ import { HomeContext } from "../../contexts/HomeContext.jsx";
 import { BeatLoader } from "react-spinners";
 import HouseCard from "../HouseCard.jsx";
 import { Link } from "react-router-dom";
-import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -60,15 +59,18 @@ var settings = {
         </div>
       </div>
       {/* loading */}
-      {Loading && <BeatLoader color="#6163c0" className="mt-16 text-center" />}
+      {Loading ? <BeatLoader color="#6163c0" className="mt-16 text-center" />:(
+          <Slider {...settings} className="mx-3">
+          {Data.map((item) => (
+            <Link to= {`/details/${item.id}`} key={item.id}>
+              <HouseCard details={item} />
+            </Link>
+          ))}
+        </Slider>
+      )}
       {/* home suggested */}
-      <Slider {...settings} className="mx-3">
-        {Data.map((item) => (
-          <Link to= {`/details/${item.id}`} key={item.id}>
-            <HouseCard details={item} />
-          </Link>
-        ))}
-      </Slider>
+
+
     </div>
   );
 }
