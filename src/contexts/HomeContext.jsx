@@ -13,6 +13,7 @@ function HomeContextProvider({ children }) {
   const [Price, setPrice] = useState("محدوده قیمت ");
   const [Prices, setPrices] = useState([]);
   const [Loading, setLoading] = useState(false);
+  const [error, setError] = useState('متاسفانه موردی یافت نشد!')
 
   useEffect(() => {
     setLoading(true)
@@ -79,10 +80,11 @@ function HomeContextProvider({ children }) {
         return home.type === Type && home.rent === Price;
       }
     });
+   
 // for emulate the user's device
     setTimeout(() => {
       return (
-        filterHome.length < 1 ? setData([]) : setData(filterHome),
+        filterHome.length < 1 ?setData([]) : setData(filterHome),
         setLoading(false)
       );
     }, 3000);
@@ -91,6 +93,7 @@ function HomeContextProvider({ children }) {
   return (
     <HomeContext.Provider
       value={{
+        error,
         Type,
         Types,
         City,

@@ -10,7 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import './sliderChanges.css'
 function SuggestedList() {
   // import context values from context file
-  const { Loading, Data } = useContext(HomeContext);
+  const { Loading, Data , error } = useContext(HomeContext);
 // settings for slider
 var settings = {
   dots: false,
@@ -60,17 +60,19 @@ var settings = {
       </div>
       {/* loading */}
       {Loading ? <BeatLoader color="#6163c0" className="mt-16 text-center" />:(
-          <Slider {...settings} className="mx-3">
+       <>
+       <Slider {...settings} className="mx-3">
           {Data.map((item) => (
             <Link to= {`/details/${item.id}`} key={item.id}>
               <HouseCard details={item} />
             </Link>
           ))}
         </Slider>
+      {
+        Data.length == 0 &&   <h1 className="mx-7 text-2xl font-bold text-red-700 text-center">{error}</h1>
+      }
+        </>
       )}
-      {/* home suggested */}
-
-
     </div>
   );
 }
